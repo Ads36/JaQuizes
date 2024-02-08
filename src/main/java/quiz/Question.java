@@ -1,9 +1,11 @@
 package quiz;
 
+import java.util.ArrayList;
+
 public class Question {
     String category;
     String question;
-    String[] options;
+    ArrayList<String> options;
     int correctAnswer;
     
     @Override
@@ -11,7 +13,7 @@ public class Question {
         StringBuilder sb = new StringBuilder();
         //sb.append(category + "\n");
         sb.append(question + "\n");
-        for (int i = 0; i < options.length; i++) {
+        for (int i = 0; i < options.size(); i++) {
 
             if (i < 26) {
                 sb.append((char)('A' + i) + ") ");
@@ -19,19 +21,33 @@ public class Question {
             else {
                 sb.append((char)('A' + (i / 26) - 1) + "" + (char)('A' + (i % 26)) + ") ");
             }
-            sb.append(options[i]);
-            if (i != options.length - 1) {
+            sb.append(options.get(i));
+            if (i != options.size() - 1) {
                 sb.append("\n");
             }
         }
         //sb.append("Answer: " + (char)('A' + correctAnswer) + "\n");
         return sb.toString();
     }
-    public Question(String category, String question, String[] options, String correctAnswer) {
+    public Question(String category, String question, ArrayList<String> options) {
         this.category = category;
         this.question = question;
         this.options = options;
-        this.correctAnswer = getCorrectAnswerAsInt(correctAnswer);
+        arrangeQuestion();
+    }
+    private void arrangeQuestion() {
+        String correctAnswer = options.get(0);
+        shuffleQuestions();
+        this.correctAnswer = options.indexOf(correctAnswer);
+    }
+    private void shuffleQuestions() {
+        ArrayList<String> shuffledQuestions = new ArrayList<String>();
+        while (options.size() > 0) {
+            int randomIndex = (int)(Math.random() * options.size());
+            shuffledQuestions.add(options.get(randomIndex));
+            options.remove(randomIndex);
+        }
+        options = shuffledQuestions;
     }
     private int getCorrectAnswerAsInt(String answer) throws IllegalArgumentException {
         int answerAsInt = 0;
@@ -62,7 +78,7 @@ public class Question {
         }
 
         // Check if the answer is in the range of the options
-        if (answerAsInt < 0 || answerAsInt > this.options.length-1) {
+        if (answerAsInt < 0 || answerAsInt > this.options.size()-1) {
             throw new IllegalArgumentException("Invalid answer: " + answer);
         }
         return answerAsInt;
