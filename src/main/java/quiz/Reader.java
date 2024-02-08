@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 public class Reader {
     private ArrayList<Question> questions;
+    private String path;
+    public Reader(String path) {
+        this.path = path;
+    }
+    public String getPath() {
+        return path;
+    }
     public ArrayList<Question> getQuestions() {
         return questions;
     }
@@ -45,14 +52,13 @@ public class Reader {
             }
 
             String question = reader.readLine();
-            String correctAnswer = reader.readLine();
             ArrayList<String> options = new ArrayList<String>();
             String line;
 
             while ((line = reader.readLine()) != null && !line.equals("")) {
                 options.add(line);
             }
-            return new Question(category, question, options.toArray(new String[options.size()]), correctAnswer);
+            return new Question(category, question, options);
             
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
