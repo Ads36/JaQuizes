@@ -43,7 +43,14 @@ public class Reader {
             }
 
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            
+            System.out.println("Otázky musí být v souboru " + path);
+            System.exit(1);
+        }
+        catch (Exception e) {
+            System.out.println("Nebylo možné načíst otázky");
+            System.out.println("V souboru " + path + " jsou otázky v chybném formátu");
+            System.exit(1);
         }
     }
     /** 
@@ -86,7 +93,6 @@ public class Reader {
             return new Question(category, question, options);
             
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
             return null;
         }
     }

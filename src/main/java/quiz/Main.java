@@ -3,9 +3,6 @@ package quiz;
 import java.util.ArrayList;
 public class Main {
     
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
 
         Reader reader = new Reader("questions.txt");
