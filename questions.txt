@@ -1,50 +1,73 @@
 geografie
 Kolik metrů měří nejvyšší hora na světě?
-2
-8756
 8848
+8756
 8801
 8954
 
 
 politika
 Kdo je současným prezidentem USA?
-28
+Joe Biden
 Barack Obama
 George W. Bush
-Joe Biden
 Bill Clinton
-Donald Trump
-D
-a
-a
-Barack
-Clinton
-a
-současnýmf
-f
-sfd
-sfd
-sfdsf
-sfd
-sfd
-sfd
-f
-geografieh
-hora
-je
-je
-je
-je
-je
-je toto je
-USA
-i
-Kdo
-je
-je
-je
-je
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
+test
 
 
+věda
+Co je chemický prvek s označením H?
+vodík
+helium
+hafnium
+hassium
 
+politika
+Která země v EU je největší podle počtu obyvatel?
+Německo
+Francie
+Itálie
+Španělsko
+Polsko
+
+geografie
+Jaký je největší ostrov na světě?
+Grónsko
+Nová Guinea
+Borneo
+Madagaskar
+
+věda
+Jaký prvek má největší zastoupení v atmosféře na Zemi?
+dusík
+kyslík
+argon
+vodík
+
+geografie
+Jaké je největší jezero na světě?
+Kaspické moře
+Viktoriino jezero
+Huronské jezero
+Bajkalské jezero
+Mrtvé moře

@@ -2,6 +2,9 @@ package quiz;
 
 import java.util.ArrayList;
 
+/**
+ * Question class, represents a question
+ */
 public class Question {
     String category;
     String question;
@@ -26,7 +29,6 @@ public class Question {
                 sb.append("\n");
             }
         }
-        //sb.append("Answer: " + (char)('A' + correctAnswer) + "\n");
         return sb.toString();
     }
     public Question(String category, String question, ArrayList<String> options) {
@@ -35,31 +37,54 @@ public class Question {
         this.options = options;
         arrangeQuestion();
     }
+    /**
+     * Shuffles the options and sets the correct answer
+     */
     private void arrangeQuestion() {
         String correctAnswer = options.get(0);
-        shuffleQuestions();
+        shuffleOptions();
         this.correctAnswer = options.indexOf(correctAnswer);
     }
-    private void shuffleQuestions() {
-        ArrayList<String> shuffledQuestions = new ArrayList<String>();
+    /**
+     * Returns the correct answer
+     * @return {@code String} - the correct answer
+     */
+    public String getCorrectAnswer() {
+        return options.get(correctAnswer);
+    }
+    /**
+     * Shuffles the options
+     */
+    private void shuffleOptions() {
+        ArrayList<String> shuffledOptions = new ArrayList<String>();
         while (options.size() > 0) {
             int randomIndex = (int)(Math.random() * options.size());
-            shuffledQuestions.add(options.get(randomIndex));
+            shuffledOptions.add(options.get(randomIndex));
             options.remove(randomIndex);
         }
-        options = shuffledQuestions;
+        options = shuffledOptions;
     }
+    /**
+     * Returns the correct answer for indexing purposes
+     * @return {@code int} - the correct answer as integer
+     */
     private int getCorrectAnswerAsInt(String answer) throws IllegalArgumentException {
         int answerAsInt = 0;
+
+        // If the answer is a number
         if (answer.matches("\\d+")) {
             answerAsInt =  Integer.parseInt(answer) - 1;
         } 
+
+        // If the answer is a single character
         else if (answer.length() == 1) {
             if (answer.charAt(0) >= 'A' && answer.charAt(0) <= 'Z') {
                 answer = answer.toLowerCase();
             }
             answerAsInt = answer.charAt(0) - 'a';
         } 
+
+        // If the answer is two characters long
         else if (answer.length() == 2) {
             if (answer.charAt(0) >= 'A' && answer.charAt(0) <= 'Z') {
                 answer = answer.toLowerCase();
@@ -83,9 +108,19 @@ public class Question {
         }
         return answerAsInt;
     }
+    /**
+     * Checks if the answer is correct
+     * @param answer {@code String}- the answer
+     * @return {@code boolean} - true if the answer is correct, false otherwise
+     */
     public boolean isCorrectAnswer(String answer) { 
         return getCorrectAnswerAsInt(answer)== correctAnswer;
     }
+    /**
+     * Checks if the answer is valid
+     * @param answer {@code String} - the answer
+     * @return {@code boolean} - true if the answer is valid, false otherwise
+     */
     public boolean isValidAnswer(String answer) {
         try {
             getCorrectAnswerAsInt(answer);

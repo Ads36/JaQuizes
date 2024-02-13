@@ -2,18 +2,33 @@ package quiz;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+/**
+ * Quiz class, represents the quiz
+ */
 public class Quiz {
-    ArrayList<Question> allQuestions;
-    Parser parser;
-    StatisticsReaderAndWriter writer;
-    public Quiz (ArrayList<Question> questions, Parser parser, StatisticsReaderAndWriter writer) {
+    private ArrayList<Question> allQuestions;
+    private UserInterfaceHandler handler;
+    private StatisticsReaderAndWriter writer;
+
+    public Quiz (ArrayList<Question> questions, UserInterfaceHandler handler, StatisticsReaderAndWriter writer) {
         this.allQuestions = questions;
-        this.parser = parser;
+        this.handler = handler;
         this.writer = writer;
     }
+    
+    /** 
+     * Returns all loaded questions
+     * @return The {@code ArrayList<Question>} of categories
+     */
     public ArrayList<Question> getQuestions() {
         return allQuestions;
     }
+    /** 
+     * Returns all categories of questions
+     * @param questions {@code ArrayList<String>}  - list of questions
+     * @return The {@code ArrayList<String>} of categories
+     */
     public ArrayList<String> getCategories(ArrayList<Question> questions) {
         ArrayList<String> categories = new ArrayList<String>();
         for (Question question : questions) {
@@ -23,6 +38,11 @@ public class Quiz {
         }
         return categories;
     }
+    
+    /** 
+     * @param categories
+     * @return ArrayList<Question>
+     */
     public ArrayList<Question> getQuestionsByCategories(ArrayList<String> categories) {
         ArrayList<Question> questionsByCategories = new ArrayList<Question>();
         for (Question question : allQuestions) {
@@ -32,6 +52,12 @@ public class Quiz {
         }
         return questionsByCategories;
     }
+
+    /** 
+     * Mixes order of questions
+     * @param questions {@code ArrayList<Question>} - list of questions
+     * @return {@code ArrayList<Question>} - shuffled questions
+     */
     private ArrayList<Question> shuffleQuestions(ArrayList<Question> questions) {
         ArrayList<Question> shuffledQuestions = new ArrayList<Question>();
         while (questions.size() > 0) {
@@ -42,7 +68,12 @@ public class Quiz {
         return shuffledQuestions;
     }
    
-
+    /** 
+     * Starts the quiz, main method
+     * @param questions {@code ArrayList<Question>} - list of questions
+     * @param categories {@code ArrayList<String>} - list of categories
+     * @param numberOfQuestions {@code int} - number of questions
+     */
     public void startQuiz(ArrayList<Question> questions, ArrayList<String> categories, int numberOfQuestions) {
         
         int score = 0;
@@ -52,16 +83,19 @@ public class Quiz {
         HashMap<String, Integer> categoryScoresCount = new HashMap<String, Integer>();
         HashMap<String, Integer> categoryQuestionsCount = new HashMap<String, Integer>();
 
-        for (String category : categories) {
-            categoryScoresCount.put(category, 0);
-            categoryQuestionsCount.put(category, 0);
-        }
+        
         numberOfQuestions = Math.min(numberOfQuestions, questions.size());
-        for (int i = 0; i < numberOfQuestions; i++) {
 
+        for (int i = 0; i < numberOfQuestions; i++) {
             Question question = questions.get(i);
 
+            // If the category is not in the map, add it
+            if (!categoryScoresCount.containsKey(question.category)) {
+                categoryScoresCount.put(question.category, 0);
+                categoryQuestionsCount.put(question.category, 0);
+            }
             categoryQuestionsCount.put(question.category, categoryQuestionsCount.get(question.category) + 1);
+
             System.out.println(question);
             System.out.print("Odpověď: ");
             String answer = System.console().readLine();
@@ -74,7 +108,12 @@ public class Quiz {
 
             if (question.isCorrectAnswer(answer)) {
                 score++;
+                // Increment the score for the category
                 categoryScoresCount.put(question.category, categoryScoresCount.get(question.category) + 1);
+                System.out.println("Správně!");
+            }
+            else {
+                System.out.println("Špatně, správná odpověď: " + question.getCorrectAnswer());
             }
             
         }
@@ -82,20 +121,29 @@ public class Quiz {
             System.out.println();
             System.out.println("Skóre na kategorie:");
             printResultsPerCategory(categoryScoresCount, categoryQuestionsCount);
-
         }
         
         writer.WriteTestResults(score, numberOfQuestions, categoryScoresCount, categoryQuestionsCount);
 
         System.out.println();
-        System.out.println("Celkové skóre: " + score + "/" + questions.size() + ", " + (int)((double)score / questions.size() * 100) + "%");
+        System.out.println("Skóre: " + score + "/" + numberOfQuestions + ", " + (int)((double)score / numberOfQuestions * 100) + "%");
         System.out.println();
-        System.out.println("Stiskněte Enter pro pokračování");
-        System.console().readLine();
-        parser.chooseWhatToDoNext(this, questions, categories, numberOfQuestions);
-
+        handler.ChooseWhatToDoAfterQuiz(this, questions, categories, numberOfQuestions);
     }
-    private static void printResultsPerCategory(HashMap<String, Integer> correctCount, HashMap<String, Integer> questionsCount) {
+    
+    /** 
+     * Prints the statistics
+     */
+    public void printStatistics() {
+        writer.PrintBestScore();
+    }
+    
+    /** 
+     * Prints the results per category
+     * @param correctCount {@code HashMap<String, Integer>} - correct answers count
+     * @param questionsCount {@code HashMap<String, Integer>} - questions count
+     */
+    private void printResultsPerCategory(HashMap<String, Integer> correctCount, HashMap<String, Integer> questionsCount) {
         for (String category : correctCount.keySet()) {
             System.out.println(category + ": " + correctCount.get(category) + "/" + 
             questionsCount.get(category) + ", " + 
