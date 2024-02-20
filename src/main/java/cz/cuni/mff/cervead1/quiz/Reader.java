@@ -10,9 +10,6 @@ import java.io.InputStream;
 public class Reader {
     private ArrayList<Question> questions;
     private String path = "questions.txt";
-    public Reader() {
-        
-    }
     
     /** 
      * Returns the path of the file
@@ -36,7 +33,7 @@ public class Reader {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(getPath());
         ReadQuestions(inputStream);
     }
-    
+
     /** 
      * Reads questions from file
      * @param path {@code String} - the path of the file
@@ -72,8 +69,6 @@ public class Reader {
             System.exit(1);
         }
         catch (Exception e) {
-            e.printStackTrace();
-
             System.out.println("Nebylo možné načíst otázky");
             System.out.println("V souboru " + path + " jsou otázky v chybném formátu");
             System.exit(1);
