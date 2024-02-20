@@ -29,12 +29,18 @@ public class Reader {
         return questions;
     }
 
+    /** 
+     * Reads questions from file, location is implicitly set, /src/main/java/questions.txt
+     */
     public void ReadQuestionsImplicitly() {
-        
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(getPath());
         ReadQuestions(inputStream);
-        
     }
+    
+    /** 
+     * Reads questions from file
+     * @param path {@code String} - the path of the file
+     */
     public void ReadQuestionsExplicitly(String path) {
         this.path = path;
         try {

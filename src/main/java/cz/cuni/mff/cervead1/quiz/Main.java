@@ -12,7 +12,7 @@ public class Main {
         else {
             reader.ReadQuestionsImplicitly();
         }
-        StatisticsReaderAndWriter writer = new StatisticsReaderAndWriter("statistics.txt");
+        StatisticsReaderAndWriter writer = new StatisticsReaderAndWriter();
 
         UserInterfaceHandler parser = new UserInterfaceHandler();
 

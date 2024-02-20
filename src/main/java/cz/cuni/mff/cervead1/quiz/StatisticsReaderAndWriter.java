@@ -1,7 +1,8 @@
-package quiz;
+package cz.cuni.mff.cervead1.quiz;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -13,13 +14,20 @@ import java.time.format.DateTimeFormatter;
  * Class for reading and writing statistics
  */
 public class StatisticsReaderAndWriter {
-
     private String path;
     private ArrayList<OneQuizResult> results;
-    public StatisticsReaderAndWriter(String path) {
-        this.path = path;
+    public StatisticsReaderAndWriter() {
+        this.path = path();
     }
-    
+    /**
+     * Returns the path of the statistics file, which is in the user's 
+     * home directory and its name is "JaQuizesStatistics.txt"
+     * @return {@code String} - the path of the file
+     */
+    private String path() {
+        String homeDir = System.getProperty("user.home");
+        return homeDir + File.separator + "JaQuizesStatistics.txt";
+    }
     /** 
      * Reads statistics from file
      * @param path {@code String} - the path of the file
@@ -81,7 +89,7 @@ public class StatisticsReaderAndWriter {
             writer.write(java.time.LocalDateTime.now() + "\n");
             writer.write(correctAnswers + " " + numberOfQuestions + "\n");
             for (String category : categoryCorrectCount.keySet()) {
-                writer.write(category + " " + categoryCorrectCount.get(category) + " " + categoryQuestionsCount.get(category) + "\n");
+                writer.write(category.replace(' ', '_') + " " + categoryCorrectCount.get(category) + " " + categoryQuestionsCount.get(category) + "\n");
             }
             writer.write("\n");
             
@@ -136,16 +144,14 @@ public class StatisticsReaderAndWriter {
      */
     public void PrintBestScore() {
 
-        // If the results are not loaded, load them
-        if (results == null) {
-            try {
-                ReadStatistics(path);
-            }
-            // If the statistics file is in bad format, print an error
-            catch (Exception e) {
-                System.out.println("Chyba v načtení výsledků kvízů");
-                return;
-            }
+        // Load statistics
+        try {
+            ReadStatistics(path);
+        }
+        // If the statistics file is in bad format, print an error
+        catch (Exception e) {
+            System.out.println("Chyba v načtení výsledků kvízů");
+            return;
         }
         if (results.size() == 0) {
             System.out.println("Nebyly nalezeny žádné výsledky");

@@ -1,4 +1,4 @@
-package quiz;
+package cz.cuni.mff.cervead1.quiz;
 
 import java.util.ArrayList;
 

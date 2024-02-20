@@ -1,0 +1,8 @@
+/**
+ * This package contains the classes for the quiz game. Class Main runs the program, 
+ * class Quiz is the main class for the game, class Question is the class for the questions,
+ * class Reader reads questions, class UserInterfaceHandler communicates with user and StatisticsReaderAndWriter 
+ * reads and writes statistics.
+ */
+
+package quiz;
