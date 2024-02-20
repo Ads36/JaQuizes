@@ -20,6 +20,8 @@ Jestliže JRE není na vašem počítači nainstalováno, můžete si jej stáhn
 Po stažení a instalaci JRE spusťte aplikaci dvojitým kliknutím na soubor "JaQuizes.jar".
 Alternativně lze aplikaci spustit příkazem `java -jar JaQuizes.jar` ve složce s tímto souborem.
 
+Pro použití jiného než implicitního souboru s otázkami lze aplikaci spustit příkazem `java -jar JaQuizes.jar soubor_s_otázkami`
+
 Pro pokročilé uživatele: tato aplikace používá Maven, <https://maven.apache.org/>
 
 ## 3. Navigace v Aplikaci
@@ -28,7 +30,7 @@ Po spuštění aplikace vyberete počet otázek, kategorie a kvíz začne. Výb�
 
 Po zodpovězení požadovaného počtu otázek se vypíše celkové skóre za tento kvíz společně se skórem přes všechny kategorie.
 
-Poté dostanete na výběr, jestli chcete další kvíz, změnit kategorie otázek nebo vypsat výsledky za více kvízů.
+Poté dostanete na výběr, jestli chcete další kvíz, změnit kategorie otázek nebo vypsat výsledky a statistiky za více kvízů.
 
 ## 4. Formát otázek
 
@@ -51,6 +53,10 @@ Otázky od sebe musí být odděleny aspoň jedním prázdným řádkem.
 
 Otázka se jednoduše přidá připsáním na začátek/konec souboru s otázkami, nezpomeňte dodržet správný formát.
 
-## 5. Závěrem
+## 5. Statistiky
+
+Aplikace automaticky ukládá výsledky kvízu do souboru `JaQuizesStatistics.txt` v domovském adresáři.
+
+## 6. Závěrem
 
 Pro případné dotazy můžete psát na email <cervenkaadamek@seznam.cz>.
